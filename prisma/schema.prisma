@@ -10,10 +10,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
+model Org {
+  id            String    @id @default(uuid())
+  name          String
+  address       String
+  number        String
+  email         String    @unique
+  password_hash String
+  pets          Pet[]
+  adopteds      Adopted[]
 
-  @@map("users")
+  @@map("organizations")
+}
+
+model Pet {
+  id      String  @id @default(uuid())
+  name    String?
+  breed   String
+  age     String
+  city    String
+  feature String
+
+  org      Org       @relation(fields: [org_id], references: [id])
+  org_id   String
+  adopteds Adopted[]
+
+  @@map("pet")
+}
+
+model Client {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password_hash String
+  adopteds      Adopted[]
+
+  @@map("client")
+}
+
+model Adopted {
+  id          String  @id @default(uuid())
+  was_adopted Boolean
+
+  org    Org    @relation(fields: [org_id], references: [id])
+  org_id String
+
+  pet    Pet    @relation(fields: [pet_id], references: [id])
+  pet_id String
+
+  client    Client @relation(fields: [client_id], references: [id])
+  client_id String
+
+  @@map("adopted")
 }
