@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { RegisterUseCase } from '@/use-cases/register'
 import { PrismaOrgsRepository } from '@/repositories/prisma/prisma-orgs-repository'
+import { OrgAlreadyExistsError } from '@/use-cases/errors/org-already-exists-error'
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   const registerBodySchema = z.object({
@@ -28,7 +29,11 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
       password,
     })
   } catch (error) {
-    return reply.status(409).send()
+    if (error instanceof OrgAlreadyExistsError) {
+      return reply.status(409).send({ message: error.message })
+    }
+
+    return reply.status(500).send()
   }
 
   return reply.status(201).send()
