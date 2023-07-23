@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { OrgsRepository } from '@/repositories/orgs-repository'
 import { hash } from 'bcryptjs'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
