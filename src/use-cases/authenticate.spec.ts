@@ -1,5 +1,5 @@
 import { expect, describe, it, beforeEach } from 'vitest'
-import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-users-repository'
+import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { AuthenticateUseCase } from './authenticate'
 import { hash } from 'bcryptjs'
 import { InvalidCredentialErros } from './errors/invalid-credentials-error'
@@ -31,9 +31,6 @@ describe('Authenticate Use Case', () => {
   })
 
   it('should not be able to authenticate with wrong email', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const sut = new AuthenticateUseCase(orgsRepository)
-
     expect(() =>
       sut.execute({
         email: 'joihndoe@gmail.com',
