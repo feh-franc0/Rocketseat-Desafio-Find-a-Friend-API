@@ -1,15 +1,20 @@
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, beforeEach } from 'vitest'
 import { RegisterUseCase } from './register'
 import { compare } from 'bcryptjs'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
-describe('Register Use Case', () => {
-  it('should be able to register', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
+let orgsRepository: InMemoryOrgsRepository
+let sut: RegisterUseCase
 
-    const { org } = await registerUseCase.execute({
+describe('Register Use Case', () => {
+  beforeEach(() => {
+    orgsRepository = new InMemoryOrgsRepository()
+    sut = new RegisterUseCase(orgsRepository)
+  })
+
+  it('should be able to register', async () => {
+    const { org } = await sut.execute({
       name: 'John Doe',
       address: 'rua john 123',
       number: '21 9 1020-3040',
@@ -21,10 +26,7 @@ describe('Register Use Case', () => {
   })
 
   it('should hash user password upon registration', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
-
-    const { org } = await registerUseCase.execute({
+    const { org } = await sut.execute({
       name: 'John Doe',
       address: 'rua john 123',
       number: '21 9 1020-3040',
@@ -38,12 +40,9 @@ describe('Register Use Case', () => {
   })
 
   it('should not be able to register with same email twice', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
-
     const email = 'johndoe@gmail.com'
 
-    await registerUseCase.execute({
+    await sut.execute({
       name: 'John Doe',
       address: 'rua john 123',
       number: '21 9 1020-3040',
@@ -52,7 +51,7 @@ describe('Register Use Case', () => {
     })
 
     await expect(() =>
-      registerUseCase.execute({
+      sut.execute({
         name: 'John Doe',
         address: 'rua john 123',
         number: '21 9 1020-3040',
