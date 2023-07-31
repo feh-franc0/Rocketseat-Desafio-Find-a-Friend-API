@@ -1,21 +1,21 @@
 import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { SearchPetByCityUseCase } from './search-pet-by-city'
+import { GetPetByIdUseCase } from './get-pet-by-id'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { hash } from 'bcryptjs'
 
 let orgsRepository: InMemoryOrgsRepository
 let petsRepository: InMemoryPetsRepository
-let sut: SearchPetByCityUseCase
+let sut: GetPetByIdUseCase
 
-describe('Search pet by city Use Case', () => {
+describe('Get Pet By ID Use Case', () => {
   beforeEach(() => {
     orgsRepository = new InMemoryOrgsRepository()
     petsRepository = new InMemoryPetsRepository()
-    sut = new SearchPetByCityUseCase(petsRepository)
+    sut = new GetPetByIdUseCase(petsRepository)
   })
 
-  it('should be possible to find the pets of a city', async () => {
+  it('should be able get pet by id', async () => {
     const org = await orgsRepository.create({
       name: 'John Doe',
       email: 'joihndoe@gmail.com',
@@ -24,15 +24,7 @@ describe('Search pet by city Use Case', () => {
       number: '',
     })
 
-    await petsRepository.create({
-      org_id: org.id,
-      age: '3',
-      breed: 'golden',
-      feature: 'carinhoso',
-      city: 'RJ',
-    })
-
-    await petsRepository.create({
+    const pet = await petsRepository.create({
       org_id: org.id,
       age: '4',
       breed: 'labrador',
@@ -40,15 +32,7 @@ describe('Search pet by city Use Case', () => {
       city: 'RJ',
     })
 
-    const searchPetByCity = await sut.execute({ city: 'RJ' })
-
-    expect(searchPetByCity.pets[0].city).toEqual('RJ')
-
-    expect(searchPetByCity).toEqual({
-      pets: [
-        expect.objectContaining({ city: 'RJ' }),
-        expect.objectContaining({ city: 'RJ' }),
-      ],
-    })
+    const getPetById = await sut.execute({ id: pet.id })
+    expect(getPetById.pet.id).toEqual(pet.id)
   })
 })
