@@ -11,6 +11,12 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pets
   }
 
+  async findByTraits(trait: string) {
+    const pets = this.items.filter((item) => item.feature.includes(trait))
+
+    return pets
+  }
+
   async findById(id: string) {
     const pet = this.items.find((item) => item.id === id)
 
