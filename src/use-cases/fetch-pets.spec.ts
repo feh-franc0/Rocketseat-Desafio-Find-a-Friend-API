@@ -1,6 +1,6 @@
 import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { SearchPetByCityUseCase } from './search-pet-by-city'
+import { SearchPetByCityUseCase } from './fetch-pets'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { hash } from 'bcryptjs'
 
@@ -52,7 +52,50 @@ describe('Search pet by city Use Case', () => {
     })
   })
 
-  it('should be possible to find the pets of a city in a paginated way', async () => {
+  it('should be possible to find the pets of a city and traits', async () => {
+    const org = await orgsRepository.create({
+      name: 'John Doe',
+      email: 'joihndoe@gmail.com',
+      password_hash: await hash('123456', 6),
+      address: '',
+      number: '',
+    })
+
+    await petsRepository.create({
+      org_id: org.id,
+      age: '3',
+      breed: 'golden',
+      feature: 'carinhoso',
+      city: 'RJ',
+    })
+
+    await petsRepository.create({
+      org_id: org.id,
+      age: '4',
+      breed: 'labrador',
+      feature: 'agitado',
+      city: 'RJ',
+    })
+
+    const searchPetByCity = await sut.execute({
+      city: 'RJ',
+      page: 1,
+      breed: 'golden',
+    })
+
+    console.log(searchPetByCity)
+
+    expect(searchPetByCity.pets[0].city).toEqual('RJ')
+
+    expect(searchPetByCity).toEqual({
+      pets: [
+        expect.objectContaining({ city: 'RJ' }),
+        expect.objectContaining({ city: 'RJ' }),
+      ],
+    })
+  })
+
+  it('should be possible to find the pets in a paginated way', async () => {
     const org = await orgsRepository.create({
       name: 'John Doe',
       email: 'joihndoe@gmail.com',

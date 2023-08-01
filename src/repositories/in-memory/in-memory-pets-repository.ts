@@ -21,6 +21,26 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pets
   }
 
+  async findPetsWithFilters(
+    city: string,
+    page: number,
+    feature?: string,
+    breed?: string,
+    age?: string,
+  ) {
+    const filteredPets = this.items
+      .filter(
+        (item) =>
+          item.city === city &&
+          (!feature || item.feature.includes(feature)) &&
+          (!breed || item.breed === breed) &&
+          (!age || item.age === age),
+      )
+      .slice((page - 1) * 20, page * 20)
+
+    return filteredPets
+  }
+
   async findById(id: string) {
     const pet = this.items.find((item) => item.id === id)
 
