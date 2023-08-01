@@ -5,14 +5,18 @@ import { randomUUID } from 'node:crypto'
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
 
-  async findByCity(city: string) {
-    const pets = this.items.filter((item) => item.city === city)
+  async findByCity(city: string, page: number) {
+    const pets = this.items
+      .filter((item) => item.city === city)
+      .slice((page - 1) * 20, page * 20)
 
     return pets
   }
 
-  async findByTraits(trait: string) {
-    const pets = this.items.filter((item) => item.feature.includes(trait))
+  async findByTraits(trait: string, page: number) {
+    const pets = this.items
+      .filter((item) => item.feature.includes(trait))
+      .slice((page - 1) * 20, page * 20)
 
     return pets
   }

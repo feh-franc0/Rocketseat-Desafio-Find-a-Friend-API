@@ -40,7 +40,7 @@ describe('Search pet by city Use Case', () => {
       city: 'RJ',
     })
 
-    const searchPetByCity = await sut.execute({ city: 'RJ' })
+    const searchPetByCity = await sut.execute({ city: 'RJ', page: 1 })
 
     expect(searchPetByCity.pets[0].city).toEqual('RJ')
 
@@ -48,6 +48,36 @@ describe('Search pet by city Use Case', () => {
       pets: [
         expect.objectContaining({ city: 'RJ' }),
         expect.objectContaining({ city: 'RJ' }),
+      ],
+    })
+  })
+
+  it('should be possible to find the pets of a city in a paginated way', async () => {
+    const org = await orgsRepository.create({
+      name: 'John Doe',
+      email: 'joihndoe@gmail.com',
+      password_hash: await hash('123456', 6),
+      address: '',
+      number: '',
+    })
+
+    for (let i = 1; i <= 22; i++) {
+      await petsRepository.create({
+        org_id: org.id,
+        age: `${i}`,
+        breed: 'golden',
+        feature: 'carinhoso',
+        city: 'RJ',
+      })
+    }
+
+    const searchPetByCity = await sut.execute({ city: 'RJ', page: 2 })
+
+    expect(searchPetByCity.pets).toHaveLength(2)
+    expect(searchPetByCity).toEqual({
+      pets: [
+        expect.objectContaining({ age: '21' }),
+        expect.objectContaining({ age: '22' }),
       ],
     })
   })

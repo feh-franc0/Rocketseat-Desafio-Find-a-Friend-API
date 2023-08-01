@@ -3,10 +3,11 @@ import { PetsRepository } from '@/repositories/pets-repository'
 
 interface ISearchPetByCityUseCaseRequest {
   trait: string
+  page: number
 }
 
 interface ISearchPetByCityUseCaseResponse {
-  pet: Pet[]
+  pets: Pet[]
 }
 
 // export class SearchPetByCityUseCase {
@@ -15,13 +16,14 @@ export class GetPetByTraitUseCase {
 
   async execute({
     trait,
+    page,
   }: ISearchPetByCityUseCaseRequest): Promise<ISearchPetByCityUseCaseResponse> {
-    const pet = await this.petsRepository.findByTraits(trait)
+    const pets = await this.petsRepository.findByTraits(trait, page)
 
-    if (!pet) {
+    if (!pets) {
       throw new Error('Pet not found.')
     }
 
-    return { pet }
+    return { pets }
   }
 }
