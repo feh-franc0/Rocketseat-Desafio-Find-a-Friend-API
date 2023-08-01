@@ -77,10 +77,18 @@ describe('Search pet by city Use Case', () => {
       city: 'RJ',
     })
 
+    await petsRepository.create({
+      org_id: org.id,
+      age: '2',
+      breed: 'labrador',
+      feature: 'quieto',
+      city: 'RJ',
+    })
+
     const searchPetByCity = await sut.execute({
       city: 'RJ',
       page: 1,
-      breed: 'golden',
+      breed: 'labrador',
     })
 
     console.log(searchPetByCity)
@@ -89,8 +97,8 @@ describe('Search pet by city Use Case', () => {
 
     expect(searchPetByCity).toEqual({
       pets: [
-        expect.objectContaining({ city: 'RJ' }),
-        expect.objectContaining({ city: 'RJ' }),
+        expect.objectContaining({ age: '4', breed: 'labrador', city: 'RJ' }),
+        expect.objectContaining({ age: '2', breed: 'labrador', city: 'RJ' }),
       ],
     })
   })
