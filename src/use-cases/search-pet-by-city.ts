@@ -18,6 +18,10 @@ export class SearchPetByCityUseCase {
     city,
     page,
   }: ISearchPetByCityUseCaseRequest): Promise<ISearchPetByCityUseCaseResponse> {
+    if (!city) {
+      throw new Error('inform the city')
+    }
+
     const pets = await this.petsRepository.findByCity(city, page)
 
     return { pets }
