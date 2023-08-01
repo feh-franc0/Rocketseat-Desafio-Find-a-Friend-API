@@ -91,8 +91,6 @@ describe('Search pet by city Use Case', () => {
       breed: 'labrador',
     })
 
-    console.log(searchPetByCity)
-
     expect(searchPetByCity.pets[0].city).toEqual('RJ')
 
     expect(searchPetByCity).toEqual({
