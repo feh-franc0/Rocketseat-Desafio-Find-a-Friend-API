@@ -2,7 +2,7 @@ import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { hash } from 'bcryptjs'
 import { GetOrgProfileUseCase } from './get-org-profile'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NoOrgsFoundError } from './errors/no-organization-found-error'
 
 let orgsRepository: InMemoryOrgsRepository
 let sut: GetOrgProfileUseCase
@@ -35,6 +35,6 @@ describe('Get Org Profile Use Case', () => {
       sut.execute({
         orgId: 'non-existing-id',
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError)
+    ).rejects.toBeInstanceOf(NoOrgsFoundError)
   })
 })

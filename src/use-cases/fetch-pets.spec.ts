@@ -8,14 +8,14 @@ let orgsRepository: InMemoryOrgsRepository
 let petsRepository: InMemoryPetsRepository
 let sut: SearchPetByCityUseCase
 
-describe('Search pet by city Use Case', () => {
+describe('Fetch Pets Use Case', () => {
   beforeEach(() => {
     orgsRepository = new InMemoryOrgsRepository()
     petsRepository = new InMemoryPetsRepository()
     sut = new SearchPetByCityUseCase(petsRepository)
   })
 
-  it('should be possible to find the pets of a city', async () => {
+  it('should be able to find the pets of a city', async () => {
     const org = await orgsRepository.create({
       name: 'John Doe',
       email: 'joihndoe@gmail.com',
@@ -52,7 +52,7 @@ describe('Search pet by city Use Case', () => {
     })
   })
 
-  it('should be possible to find the pets of a city and traits', async () => {
+  it('should be able to find the pets of a city and traits', async () => {
     const org = await orgsRepository.create({
       name: 'John Doe',
       email: 'joihndoe@gmail.com',
@@ -101,7 +101,7 @@ describe('Search pet by city Use Case', () => {
     })
   })
 
-  it('should be possible to find the pets in a paginated way', async () => {
+  it('should be able to find the pets in a paginated way', async () => {
     const org = await orgsRepository.create({
       name: 'John Doe',
       email: 'joihndoe@gmail.com',

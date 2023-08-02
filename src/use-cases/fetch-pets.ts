@@ -1,5 +1,6 @@
 import { Pet } from '@prisma/client'
 import { PetsRepository } from '@/repositories/pets-repository'
+import { NoPetsFoundError } from './errors/no-pets-found-error'
 
 interface ISearchPetByCityUseCaseRequest {
   city: string
@@ -24,7 +25,6 @@ export class SearchPetByCityUseCase {
     breed,
     age,
   }: ISearchPetByCityUseCaseRequest): Promise<ISearchPetByCityUseCaseResponse> {
-    // const pets = await this.petsRepository.findByCity(city, page)
     const pets = await this.petsRepository.findPetsWithFilters(
       city,
       page,

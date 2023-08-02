@@ -25,14 +25,6 @@ export class RegisterUseCase {
     name,
     password,
   }: IRegisterUseCaseRequest): Promise<IRegisterUseCaseResponse> {
-    if (!address) {
-      throw new Error('it is mandatory to fill in the field: Address')
-    }
-
-    if (!number) {
-      throw new Error('it is mandatory to fill in the field: Address')
-    }
-
     const password_hash = await hash(password, 6)
 
     const userWithSameEmail = await this.orgsRepository.findByEmail(email)
