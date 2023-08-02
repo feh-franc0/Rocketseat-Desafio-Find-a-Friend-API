@@ -2,11 +2,11 @@ import { OrgsRepository } from '@/repositories/orgs-repository'
 import { Org } from '@prisma/client'
 import { NoOrgsFoundError } from './errors/no-organization-found-error'
 
-interface GetOrgProfileUseCaseRequest {
+interface IGetOrgProfileUseCaseRequest {
   orgId: string
 }
 
-interface GetOrgProfileUseCaseResponse {
+interface IGetOrgProfileUseCaseResponse {
   org: Org
 }
 
@@ -15,7 +15,7 @@ export class GetOrgProfileUseCase {
 
   async execute({
     orgId,
-  }: GetOrgProfileUseCaseRequest): Promise<GetOrgProfileUseCaseResponse> {
+  }: IGetOrgProfileUseCaseRequest): Promise<IGetOrgProfileUseCaseResponse> {
     const org = await this.orgsRepository.findById(orgId)
 
     if (!org) {

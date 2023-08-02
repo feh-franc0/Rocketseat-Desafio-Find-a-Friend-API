@@ -2,7 +2,7 @@ import { Pet } from '@prisma/client'
 import { PetsRepository } from '@/repositories/pets-repository'
 import { NoPetsFoundError } from './errors/no-pets-found-error'
 
-interface ISearchPetByCityUseCaseRequest {
+interface IFetchPetsUseCaseRequest {
   city: string
   name?: string
   breed?: string
@@ -11,11 +11,11 @@ interface ISearchPetByCityUseCaseRequest {
   page: number
 }
 
-interface ISearchPetByCityUseCaseResponse {
+interface IFetchPetsUseCaseResponse {
   pets: Pet[]
 }
 
-export class SearchPetByCityUseCase {
+export class FetchPetsUseCase {
   constructor(private petsRepository: PetsRepository) {}
 
   async execute({
@@ -24,7 +24,7 @@ export class SearchPetByCityUseCase {
     feature,
     breed,
     age,
-  }: ISearchPetByCityUseCaseRequest): Promise<ISearchPetByCityUseCaseResponse> {
+  }: IFetchPetsUseCaseRequest): Promise<IFetchPetsUseCaseResponse> {
     const pets = await this.petsRepository.findPetsWithFilters(
       city,
       page,

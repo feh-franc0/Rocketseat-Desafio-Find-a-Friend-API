@@ -1,9 +1,9 @@
 import { PrismaOrgsRepository } from '@/repositories/prisma/prisma-orgs-repository'
-import { RegisterUseCase } from '../register-org'
+import { RegisterOrgUseCase } from '../register-org'
 
 export function makeRegisterUseCase() {
   const prismaOrgsRepository = new PrismaOrgsRepository()
-  const registerUseCase = new RegisterUseCase(prismaOrgsRepository)
+  const registerOrgUseCase = new RegisterOrgUseCase(prismaOrgsRepository)
 
-  return registerUseCase
+  return registerOrgUseCase
 }

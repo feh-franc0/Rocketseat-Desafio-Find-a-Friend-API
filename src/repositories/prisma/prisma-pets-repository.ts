@@ -1,11 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
 
-import { OrgsRepository } from '../orgs-repository'
 import { PetsRepository } from '../pets-repository'
-import { GetResult } from '@prisma/client/runtime/library'
 
-export class PrismaOrgsRepository implements PetsRepository {
+export class PrismaPetsRepository implements PetsRepository {
   async findById(id: string) {
     const pet = await prisma.pet.findUnique({
       where: {
