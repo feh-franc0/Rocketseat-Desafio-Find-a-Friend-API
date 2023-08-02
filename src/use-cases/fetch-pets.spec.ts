@@ -1,18 +1,18 @@
 import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { SearchPetByCityUseCase } from './fetch-pets'
+import { FetchPetsUseCase } from './fetch-pets'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { hash } from 'bcryptjs'
 
 let orgsRepository: InMemoryOrgsRepository
 let petsRepository: InMemoryPetsRepository
-let sut: SearchPetByCityUseCase
+let sut: FetchPetsUseCase
 
 describe('Fetch Pets Use Case', () => {
   beforeEach(() => {
     orgsRepository = new InMemoryOrgsRepository()
     petsRepository = new InMemoryPetsRepository()
-    sut = new SearchPetByCityUseCase(petsRepository)
+    sut = new FetchPetsUseCase(petsRepository)
   })
 
   it('should be able to find the pets of a city', async () => {

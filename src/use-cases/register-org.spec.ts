@@ -1,16 +1,16 @@
 import { expect, describe, it, beforeEach } from 'vitest'
-import { RegisterUseCase } from './register-org'
+import { RegisterOrgUseCase } from './register-org'
 import { compare } from 'bcryptjs'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
 let orgsRepository: InMemoryOrgsRepository
-let sut: RegisterUseCase
+let sut: RegisterOrgUseCase
 
 describe('Register Org Use Case', () => {
   beforeEach(() => {
     orgsRepository = new InMemoryOrgsRepository()
-    sut = new RegisterUseCase(orgsRepository)
+    sut = new RegisterOrgUseCase(orgsRepository)
   })
 
   it('should be able to register', async () => {
