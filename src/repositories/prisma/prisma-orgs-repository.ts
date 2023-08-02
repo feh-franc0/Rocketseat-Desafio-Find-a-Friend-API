@@ -2,7 +2,6 @@ import { prisma } from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
 
 import { OrgsRepository } from '../orgs-repository'
-import { GetResult } from '@prisma/client/runtime/library'
 
 export class PrismaOrgsRepository implements OrgsRepository {
   async findById(id: string) {
