@@ -1,6 +1,5 @@
 import { Pet } from '@prisma/client'
 import { PetsRepository } from '@/repositories/pets-repository'
-import { NoPetsFoundError } from './errors/no-pets-found-error'
 
 interface IFetchPetsUseCaseRequest {
   city: string
