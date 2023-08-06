@@ -3,11 +3,11 @@ import { PetsRepository } from '@/repositories/pets-repository'
 
 interface IFetchPetsUseCaseRequest {
   city: string
+  page: number
   name?: string
   breed?: string
   age?: string
   feature?: string
-  page: number
 }
 
 interface IFetchPetsUseCaseResponse {
