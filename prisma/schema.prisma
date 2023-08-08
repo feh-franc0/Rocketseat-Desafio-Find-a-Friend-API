@@ -10,15 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  COMPANY
+}
+
 model Org {
-  id            String    @id @default(uuid())
+  id            String @id @default(uuid())
   name          String
   address       String
   number        String
-  email         String    @unique
+  email         String @unique
   password_hash String
+  role          Role   @default(COMPANY)
   pets          Pet[]
-  adopteds      Adopted[]
 
   @@map("organizations")
 }
@@ -31,35 +36,9 @@ model Pet {
   city    String
   feature String
 
-  org      Org       @relation(fields: [org_id], references: [id])
+  org      Org      @relation(fields: [org_id], references: [id])
   org_id   String
-  adopteds Adopted[]
+  adopteds Boolean? @default(false)
 
   @@map("pet")
-}
-
-model Client {
-  id            String    @id @default(uuid())
-  name          String
-  email         String    @unique
-  password_hash String
-  adopteds      Adopted[]
-
-  @@map("client")
-}
-
-model Adopted {
-  id          String  @id @default(uuid())
-  was_adopted Boolean
-
-  org    Org    @relation(fields: [org_id], references: [id])
-  org_id String
-
-  pet    Pet    @relation(fields: [pet_id], references: [id])
-  pet_id String
-
-  client    Client @relation(fields: [client_id], references: [id])
-  client_id String
-
-  @@map("adopted")
 }
