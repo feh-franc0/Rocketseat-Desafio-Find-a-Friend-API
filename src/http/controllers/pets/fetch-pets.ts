@@ -7,7 +7,7 @@ export async function fetchPets(request: FastifyRequest, reply: FastifyReply) {
 
   const registerBodySchema = z.object({
     city: z.string(),
-    page: z.number().default(1),
+    page: z.coerce.number().default(1),
     age: z.string(),
     breed: z.string(),
     feature: z.string(),
