@@ -15,7 +15,7 @@ export async function createAndAuthenticateOrg(app: FastifyInstance) {
     password: '123456',
   })
 
-  const { token, id } = authResponse.body
+  const { token } = authResponse.body
 
-  return { token, orgId: id }
+  return { token }
 }
