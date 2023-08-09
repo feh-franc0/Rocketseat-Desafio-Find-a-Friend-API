@@ -10,7 +10,11 @@ import { adopted } from './adopted'
 export async function petsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
 
-  app.post('/pet/adopted/:id', { onRequest: [verifyOrgRole('ADMIN')] }, adopted)
+  app.patch(
+    '/pet/adopted/:id',
+    { onRequest: [verifyOrgRole('ADMIN')] },
+    adopted,
+  )
 
   app.post('/pet/register', { onRequest: [verifyOrgRole('ADMIN')] }, create)
 
