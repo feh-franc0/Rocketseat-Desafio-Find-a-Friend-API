@@ -4,6 +4,19 @@ import { Prisma } from '@prisma/client'
 import { PetsRepository } from '../pets-repository'
 
 export class PrismaPetsRepository implements PetsRepository {
+  async setAsAdopted(id: string) {
+    const pet = await prisma.pet.update({
+      where: {
+        id,
+      },
+      data: {
+        adopted: true,
+      },
+    })
+
+    return pet
+  }
+
   async findById(id: string) {
     const pet = await prisma.pet.findUnique({
       where: {

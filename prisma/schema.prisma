@@ -36,9 +36,9 @@ model Pet {
   city    String
   feature String
 
-  org      Org      @relation(fields: [org_id], references: [id])
-  org_id   String
-  adopteds Boolean? @default(false)
+  org     Org     @relation(fields: [org_id], references: [id])
+  org_id  String
+  adopted Boolean @default(false)
 
   @@map("pet")
 }

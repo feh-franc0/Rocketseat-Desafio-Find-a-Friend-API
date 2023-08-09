@@ -33,6 +33,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
       address: data.address,
       number: data.number,
       password_hash: data.password_hash,
+      role: data.role ?? 'COMPANY',
     }
 
     this.items.push(org)

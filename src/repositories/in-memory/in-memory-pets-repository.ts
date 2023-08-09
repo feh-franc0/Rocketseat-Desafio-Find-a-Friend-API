@@ -35,6 +35,18 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
+  async setAsAdopted(id: string) {
+    const petIndex = this.items.findIndex((item) => item.id === id)
+
+    if (petIndex === -1) {
+      return null
+    }
+
+    this.items[petIndex].adopted = true
+
+    return this.items[petIndex]
+  }
+
   async create(data: Prisma.PetUncheckedCreateInput) {
     // const pet = { ...data, id: randomUUID(), name: data.name ?? '' }
 
@@ -46,6 +58,7 @@ export class InMemoryPetsRepository implements PetsRepository {
       city: data.city,
       feature: data.feature,
       org_id: data.org_id,
+      adopted: false,
     }
 
     this.items.push(pet)
